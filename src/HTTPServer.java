@@ -51,7 +51,7 @@ public class HTTPServer {
                 File file = new File("./server_folder/index.html");
                 response = new String(Files.readAllBytes(file.toPath()), StandardCharsets.ISO_8859_1);
                 printWriter.print("Content-Length: " + response.length() + EOH);
-                printWriter.print(response);
+                printWriter.print(response + EOH);
                 printWriter.flush();
             }
         } catch (IOException e){

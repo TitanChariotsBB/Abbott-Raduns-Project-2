@@ -39,6 +39,25 @@ public class HTTPClient {
                 System.out.println(line);
                 line = bufferedReader.readLine();
             }
+            StringBuilder sb = new StringBuilder();
+            line = bufferedReader.readLine();
+            sb.append(line);
+            while (!line.isEmpty()) {
+                System.out.println(line);
+                sb.append(line + "\n");
+                line = bufferedReader.readLine();
+            }
+            System.out.println(sb);
+
+            File newFile = new File("client_folder/" + file);
+            if (!newFile.exists()) {
+                newFile.createNewFile();
+            }
+
+            try (PrintWriter out = new PrintWriter("client_folder/" + file)) {
+                out.println(sb);
+            }
+
         } catch (IOException e){
             e.printStackTrace();
         }
