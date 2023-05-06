@@ -33,6 +33,10 @@ public class HTTPServer {
 //                    line  = bufferedReader.readLine();
 //                }
 
+                String fileName = line.replace("GET /","").replace(" HTTP/1.1","");
+                if (fileName.isEmpty()) fileName = "index.html";
+                System.out.println(fileName);
+
                 System.out.println("receive cmd: " + line);
 
                 // send back a response
@@ -40,7 +44,7 @@ public class HTTPServer {
                 String response = "Hello World HTTP!";
                 PrintWriter printWriter = new PrintWriter(new OutputStreamWriter(dataOutputStream, StandardCharsets.ISO_8859_1));
                 printWriter.print("HTTP/1.1 200 OK" + CRLF);
-                printWriter.print("Date: Sun, 10 Apr 2022 21:44:57 GMT " + CRLF); // TODO: change this
+                printWriter.print("Date: Sun, 10 Apr 2022 21:44:57 GMT " + CRLF);
                 printWriter.print("Cache-Control: private, max-age=0" + CRLF);
                 printWriter.print("Content-Type: text/html; charset=ISO-8859-1" + CRLF);
 //                printWriter.print("Content-Length: " + response.length() + EOH);
@@ -48,7 +52,8 @@ public class HTTPServer {
 //                printWriter.flush();
 
                 // get the file
-                File file = new File("./server_folder/index.html");
+                File file = new File("./server_folder/" + fileName);
+                if (!file.exists()) file = new File("./server_folder/404.html");
                 response = new String(Files.readAllBytes(file.toPath()), StandardCharsets.ISO_8859_1);
                 printWriter.print("Content-Length: " + response.length() + EOH);
                 printWriter.print(response + EOH);

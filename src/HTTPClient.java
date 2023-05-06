@@ -15,7 +15,11 @@ public class HTTPClient {
         Scanner in = new Scanner(System.in);
         System.out.print("Address: ");
         String addr = in.nextLine();
-        String file = "index.html";
+        System.out.print("File (hit enter for default): ");
+        String fn = in.nextLine();
+        String file;
+        if (fn.isEmpty()) file = "index.html";
+        else file = fn;
 
         System.out.println("client is requesting ... ");
         try {
@@ -25,7 +29,7 @@ public class HTTPClient {
 
             // generate a HTTP request a print writer, handy to handle output stream
             PrintWriter printWriter = new PrintWriter(new OutputStreamWriter(dataOutputStream, StandardCharsets.ISO_8859_1));
-            printWriter.print("GET / HTTP/1.1" + CRLF);
+            printWriter.print("GET /" + file + " HTTP/1.1" + CRLF);
             printWriter.print("Host: " + SERVER_ADDR + CRLF);
             printWriter.print("Connection: close" + CRLF);
             printWriter.print("Accept: */*" + EOH);
