@@ -1,7 +1,12 @@
+/** Authors: Christian Abbott, Ben Raduns
+ *  Course: COMP 342
+ *  Date: May 7th, 2023
+ *  Description: Server side of the socket-based HHTP protocol
+ */
+
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.UnknownHostException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 
@@ -28,10 +33,6 @@ public class HTTPServer {
                 // good to handle strings from stream
                 BufferedReader bufferedReader = new BufferedReader( new InputStreamReader(dataInputStream));
                 String line = bufferedReader.readLine();
-//                while(!line.isEmpty()){
-//                    System.out.println(line);
-//                    line  = bufferedReader.readLine();
-//                }
 
                 String fileName = line.replace("GET /","").replace(" HTTP/1.1","");
                 if (fileName.isEmpty()) fileName = "index.html";
@@ -47,9 +48,6 @@ public class HTTPServer {
                 printWriter.print("Date: Sun, 10 Apr 2022 21:44:57 GMT " + CRLF);
                 printWriter.print("Cache-Control: private, max-age=0" + CRLF);
                 printWriter.print("Content-Type: text/html; charset=ISO-8859-1" + CRLF);
-//                printWriter.print("Content-Length: " + response.length() + EOH);
-//                printWriter.print(response);
-//                printWriter.flush();
 
                 // get the file
                 File file = new File("./server_folder/" + fileName);
