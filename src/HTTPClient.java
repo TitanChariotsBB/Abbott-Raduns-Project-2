@@ -1,7 +1,7 @@
 /** Authors: Christian Abbott, Ben Raduns
  *  Course: COMP 342
  *  Date: May 7th, 2023
- *  Description: Client side of the socket-based HHTP protocol
+ *  Description: Client side of the socket-based HTTP protocol
  */
 
 import java.io.*;
@@ -66,11 +66,11 @@ public class HTTPClient {
             }
             System.out.println(sb);
             //Write
-            File newFile = new File("client_folder/" + file);
-            if (!newFile.exists()) {
-                newFile.createNewFile();
+            //Make sure that the file is saved to the main client_folder,
+            //even if it's in a subfolder of the server_folder
+            if(file.contains("/")) {
+                file = file.substring(file.lastIndexOf("/") + 1);
             }
-
             try (PrintWriter out = new PrintWriter("client_folder/" + file)) {
                 out.println(sb);
             }
